@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0f0c" />
+  <meta name="description" content="Tarkov Pub — no-ego LFG, clips, and community. Join the Discord." />
+  <title>Tarkov Pub — No-Ego LFG • Clips • Community</title>
+  <style>
+    :root{
+      --bg:#070a08;
+      --card:#0c120e;
+      --card2:#0a0f0b;
+      --text:#e9f7ee;
+      --muted:#a9c1b2;
+      --lime:#9cff2e;
+      --lime2:#62ff5a;
+      --border:rgba(156,255,46,.18);
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --radius: 18px;
+      --max: 1080px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 20% 5%, rgba(156,255,46,.12), transparent 55%),
+        radial-gradient(900px 520px at 85% 15%, rgba(98,255,90,.10), transparent 60%),
+        radial-gradient(700px 420px at 50% 90%, rgba(156,255,46,.08), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:24px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:12px 0 6px;
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(7,10,8,.9), rgba(7,10,8,.65), transparent);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; user-select:none;
+      font-weight:800; letter-spacing:.4px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(156,255,46,.35), transparent 55%),
+        linear-gradient(135deg, rgba(156,255,46,.22), rgba(98,255,90,.12));
+      border:1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      display:grid; place-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: linear-gradient(90deg, transparent, rgba(156,255,46,.18), transparent);
+      transform: rotate(25deg);
+      animation: sheen 5.5s linear infinite;
+    }
+    @keyframes sheen{
+      0%{transform: translateX(-35%) rotate(25deg)}
+      100%{transform: translateX(35%) rotate(25deg)}
+    }
+    .brand small{display:block; font-weight:600; color:var(--muted); letter-spacing:.2px}
+    .nav{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      border-radius:999px;
+      padding:12px 16px;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(12,18,14,.65);
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease, filter .12s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(156,255,46,.35); background: rgba(12,18,14,.85)}
+    .btn:active{transform: translateY(0px); filter: brightness(.98)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(156,255,46,.18), rgba(98,255,90,.12));
+      border-color: rgba(156,255,46,.40);
+    }
+    .pill{
+      font-size:12px; font-weight:800;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(156,255,46,.30);
+      background: rgba(156,255,46,.10);
+      color: var(--text);
+      letter-spacing:.3px;
+    }
+
+    .hero{
+      padding:34px 0 10px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns: 1fr; padding-top:18px}
+      .nav .hide-sm{display:none}
+    }
+
+    .card{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(12,18,14,.85), rgba(10,15,11,.65));
+      box-shadow: var(--shadow);
+    }
+    .hero-left{padding:28px}
+    .hero-right{padding:22px; display:flex; flex-direction:column; gap:12px}
+
+    h1{
+      margin:0 0 10px;
+      font-size: 44px;
+      line-height:1.02;
+      letter-spacing:-.7px;
+    }
+    @media (max-width: 520px){
+      h1{font-size: 36px}
+    }
+    .sub{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.5;
+      margin:0 0 18px;
+      max-width: 60ch;
+    }
+    .features{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin:12px 0 18px;
+    }
+    .feat{
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(156,255,46,.18);
+      background: rgba(7,10,8,.35);
+      color:var(--text);
+      font-weight:800;
+      font-size:13px;
+      letter-spacing:.2px;
+    }
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .cta-note{color:var(--muted); font-size:13px; margin-top:10px}
+    .divider{
+      height:1px; background: rgba(255,255,255,.06);
+      margin:18px 0 6px;
+    }
+
+    .stat-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .mini{
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(7,10,8,.35);
+      padding:14px;
+    }
+    .mini strong{display:block; font-size:14px; letter-spacing:.2px}
+    .mini span{display:block; color:var(--muted); font-size:12px; margin-top:6px; line-height:1.4}
+    .highlight{
+      border:1px solid rgba(156,255,46,.35);
+      background: linear-gradient(135deg, rgba(156,255,46,.12), rgba(98,255,90,.07));
+    }
+
+    .section{
+      margin-top:18px;
+      padding:20px;
+    }
+    .grid-3{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 900px){
+      .grid-3{grid-template-columns: 1fr}
+    }
+
+    .item{
+      padding:16px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(7,10,8,.35);
+    }
+    .item h3{
+      margin:0 0 8px; font-size:16px; letter-spacing:-.2px
+    }
+    .item p{
+      margin:0; color:var(--muted); line-height:1.5; font-size:13.5px
+    }
+
+    details{
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(7,10,8,.35);
+      border-radius: 16px;
+      padding: 14px 14px;
+    }
+    details + details{margin-top:10px}
+    summary{
+      cursor:pointer;
+      font-weight:900;
+      letter-spacing:.2px;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color:var(--muted); line-height:1.5; font-size:13.5px}
+
+    .footer{
+      margin:20px 0 90px;
+      color: var(--muted);
+      font-size: 12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    /* Sticky mobile join bar */
+    .sticky{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      padding:10px 14px;
+      background: linear-gradient(to top, rgba(7,10,8,.95), rgba(7,10,8,.65));
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.08);
+      z-index:60;
+    }
+    .sticky-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .sticky-text{
+      display:flex; flex-direction:column; gap:2px;
+      min-width: 0;
+    }
+    .sticky-text strong{font-size:12.5px}
+    .sticky-text span{font-size:11.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .sticky .btn{padding:11px 14px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          Tarkov Pub
+          <small>No-Ego LFG • Clips • Community</small>
+        </div>
+      </div>
+
+      <div class="nav">
+        <a class="btn hide-sm" href="#why">Why join</a>
+        <a class="btn hide-sm" href="#contest">Clip contest</a>
+        <a class="btn hide-sm" href="#faq">FAQ</a>
+        <a class="btn primary" id="joinTop" href="https://discord.gg/tvAKkru" target="_blank" rel="noopener">Join Discord</a>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="card hero-left">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:10px;">
+          <span class="pill">NO EGO</span>
+          <span class="pill">LFG</span>
+          <span class="pill">CLIPS</span>
+          <span class="pill">COMMUNITY</span>
+        </div>
+
+        <h1>Find squads. Share clips.<br/>Keep it no-ego.</h1>
+        <p class="sub">
+          Tarkov Pub is a Discord built for people who want teammates, good comms, and a chill place to post your best plays — without the toxic weirdness.
+        </p>
+
+        <div class="features">
+          <div class="feat">✅ No-ego LFG</div>
+          <div class="feat">🎬 Clip channels & reactions</div>
+          <div class="feat">🧠 Learn & improve together</div>
+          <div class="feat">🍻 “Pub” vibe — not tryhard drama</div>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn primary" id="joinHero" href="https://discord.gg/tvAKkru" target="_blank" rel="noopener">Join Tarkov Pub</a>
+          <button class="btn" id="copyInvite" type="button" aria-label="Copy invite link">Copy invite</button>
+        </div>
+
+        <div class="cta-note" id="copyStatus" aria-live="polite"></div>
+
+        <div class="divider"></div>
+        <div class="cta-note">
+          Tip: after you join, introduce yourself + drop a clip. Easiest way to get picked up for squads.
+        </div>
+      </div>
+
+      <div class="card hero-right" id="contest">
+        <div class="mini highlight">
+          <strong>🏆 Friday Clip Contest</strong>
+          <span>$25 to the top clip (community reactions + opinions). Weekly — starts/ends Fridays.</span>
+        </div>
+
+        <div class="stat-grid">
+          <div class="mini">
+            <strong>🎯 What we’re about</strong>
+            <span>“No ego” means: helpful comms, no raging, and improving together.</span>
+          </div>
+          <div class="mini">
+            <strong>🧩 Best way to join in</strong>
+            <span>Use LFG, react to clips, and be active on Fridays.</span>
+          </div>
+          <div class="mini">
+            <strong>📌 Clip rules (simple)</strong>
+            <span>You can post multiple clips. Clips need reactions to count. No reacting to your own clip.</span>
+          </div>
+          <div class="mini">
+            <strong>🎟️ Reactions = entries</strong>
+            <span>Each reaction is an entry for a random reactor reward (if you run that).</span>
+          </div>
+        </div>
+
+        <a class="btn primary" id="joinSide" href="https://discord.gg/tvAKkru" target="_blank" rel="noopener">Join & Start Posting</a>
+      </div>
+    </div>
+
+    <div class="card section" id="why">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <h2 style="margin:0; letter-spacing:-.4px;">Why join Tarkov Pub?</h2>
+        <span class="pill">Built for retention, not hype</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="item">
+          <h3>Squads that don’t tilt</h3>
+          <p>Find teammates who play smart and keep comms clean — even when raids go sideways.</p>
+        </div>
+        <div class="item">
+          <h3>Clips people actually react to</h3>
+          <p>Post your highlights (or fails). The goal is interaction + laughs + learning.</p>
+        </div>
+        <div class="item">
+          <h3>Community first</h3>
+          <p>Not a “dead link server.” You’re joining a pub — regulars, inside jokes, and familiar names.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="cta-row" style="margin-top:10px;">
+        <a class="btn primary" id="joinWhy" href="https://discord.gg/tvAKkru" target="_blank" rel="noopener">Join the Discord</a>
+        <a class="btn" href="#faq">Read FAQ</a>
+      </div>
+    </div>
+
+    <div class="card section" id="faq">
+      <h2 style="margin:0 0 12px; letter-spacing:-.4px;">FAQ</h2>
+
+      <details>
+        <summary>Is this server beginner friendly?</summary>
+        <p>Yes. If you’re willing to learn and keep it respectful, you’ll fit right in.</p>
+      </details>
+
+      <details>
+        <summary>What does “no-ego” actually mean here?</summary>
+        <p>No flaming teammates, no gatekeeping, no weird superiority. Critique is fine — disrespect isn’t.</p>
+      </details>
+
+      <details>
+        <summary>How do I get into squads fast?</summary>
+        <p>Join → introduce yourself → use LFG → react to a few clips → post one of your own. People engage with active members.</p>
+      </details>
+
+      <details>
+        <summary>How does the Friday clip contest work?</summary>
+        <p>Post clips throughout the week. Clips need reactions to count (no reacting to your own clip). Winner is based on community reactions/opinions to keep it quality-driven.</p>
+      </details>
+
+      <div class="divider"></div>
+      <div class="cta-row">
+        <a class="btn primary" id="joinFaq" href="https://discord.gg/tvAKkru" target="_blank" rel="noopener">Join Tarkov Pub</a>
+        <button class="btn" id="scrollTop" type="button">Back to top</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>© <span id="year"></span> Tarkov Pub • Unofficial community fan site</div>
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <span class="pill" title="Invite link used on this site">discord.gg/tvAKkru</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky join bar -->
+  <div class="sticky" role="region" aria-label="Join Tarkov Pub">
+    <div class="sticky-inner">
+      <div class="sticky-text">
+        <strong>Tarkov Pub</strong>
+        <span>No-ego LFG • Clips • Community</span>
+      </div>
+      <a class="btn primary" id="joinSticky" href="https://discord.gg/tvAKkru" target="_blank" rel="noopener">Join</a>
+    </div>
+  </div>
+
+  <script>
+    const INVITE = "https://discord.gg/tvAKkru";
+
+    // Basic click tracking (privacy-friendly: just logs in console)
+    function track(label){
+      try {
+        console.log("[TarkovPub] click:", label, new Date().toISOString());
+      } catch(e){}
+    }
+
+    ["joinTop","joinHero","joinSide","joinWhy","joinFaq","joinSticky"].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.addEventListener("click", () => track(id));
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    document.getElementById("scrollTop").addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      track("scrollTop");
+    });
+
+    const status = document.getElementById("copyStatus");
+    document.getElementById("copyInvite").addEventListener("click", async () => {
+      track("copyInvite");
+      try{
+        await navigator.clipboard.writeText(INVITE);
+        status.textContent = "✅ Invite copied: " + INVITE;
+      } catch(e){
+        // fallback
+        status.textContent = "Copy failed — here it is: " + INVITE;
+      }
+    });
+  </script>
+</body>
+</html>
